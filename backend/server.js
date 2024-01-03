@@ -16,6 +16,10 @@ const redirectUri = 'http://localhost:3000';
 
 const salesforceAPI = 'https://cheems6-dev-ed.develop.my.salesforce.com/services/data/v33.0/tooling/sobjects/ValidationRule/';
 
+app.get("/", (req, res) => {
+  res.json("hello");
+})
+
 app.get('/oauth2/callback', async (req, res) => {
   const { code } = req.query;
 
