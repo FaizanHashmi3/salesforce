@@ -29,7 +29,7 @@ const App = () => {
     try {
       setIsLoading(true);
       console.log("authCode>> " + code);
-      const response = await axios.get(`https://salesforce-api.vercel.app/oauth2/callback?code=${code}`);
+      const response = await axios.get(`https://salesforceee-api.vercel.app/oauth2/callback?code=${code}`);
       const accessToken = await response.data.accessToken;
       const username = await response.data.username;
       setName(username);
