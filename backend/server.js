@@ -5,11 +5,7 @@ const axios = require('axios');
 const https = require('https');
 const app = express();
 app.use(express.urlencoded({ extended: true }))
-app.use(cors({
-  origin: ["https://salesforce-front.vercel.app"],
-  methods: ["POST", "GET", "PATCH"],
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 var token = '';
 var url = " ";
