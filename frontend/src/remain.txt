@@ -1,0 +1,51 @@
+async function setData(ruleId, newStatus, accessToken, formula, errormsg)
+{
+const validationRuleId = ruleId;
+const apiVersion = 'v59.0'; 
+const instanceUrl = 'cheems6-dev-ed.develop.my.salesforce.com';
+console.log("inside set data")
+
+const options = {
+  hostname: instanceUrl,
+  port: 443,
+  path: `/services/data/${apiVersion}/tooling/sobjects/ValidationRule/${validationRuleId}`,
+  method: 'PATCH',
+  headers: {
+    'Authorization': `Bearer ${accessToken}`,
+    'Content-Type': 'application/json'
+  }
+};
+const req = https.request(options, (res) => {
+  let data = '';
+
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  res.on('end', () => {
+    console.log('Response:', data);
+  });
+});
+
+req.on('error', (error) => {
+  console.error('Error:', error);
+});
+
+const updateData = JSON.stringify({
+  
+  Metadata: {
+    active:newStatus,
+    errorConditionFormula: `${formula}`, 
+    errorMessage:`${errormsg}`
+
+  }
+}); 
+console.log("updated hopefully");
+req.write(updateData);
+req.end();
+
+}
+const PORT = 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
