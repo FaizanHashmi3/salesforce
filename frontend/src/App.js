@@ -29,7 +29,7 @@ const App = () => {
     try {
       setIsLoading(true);
       console.log("authCode>> " + code);
-      const response = await axios.get(`https://salesforceee-api.vercel.app/oauth2/callback?code=${code}`);
+      const response = await axios.get(`https://salesforce-api.onrender.com/oauth2/callback?code=${code}`);
       const accessToken = await response.data.accessToken;
       const username = await response.data.username;
       setName(username);
@@ -53,7 +53,7 @@ const App = () => {
   const fetchValidationRules = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get('https://salesforce-api.vercel.app/getValidationRules', {
+      const response = await axios.get('https://salesforce-api.onrender.com/getValidationRules', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -83,7 +83,7 @@ const App = () => {
     try {
       setIsLoading(true);
       const newStatus = !currentStatus;
-      const response = await axios.put(`https://salesforce-api.vercel.app/toggleValidationRule/${ruleId}`, { newStatus, formula, errormsg });
+      const response = await axios.put(`https://salesforce-api.onrender.com/toggleValidationRule/${ruleId}`, { newStatus, formula, errormsg });
 
       // console.log("response.data.updatedRule");
       console.log(response.data);
@@ -125,7 +125,7 @@ const App = () => {
       <div style={{ color: "#ff6600", fontSize: "4rem" }}>Salesforce Switch</div>
       {!accessToken ? (
         <div className='login'>
-          <h1>Login here and wait for a moment  </h1>
+          <h1>Login here and wait for a moment...  </h1>
           <button onClick={handleSalesforceAuth}>Login</button>
         </div>
       ) : (metaButton ? (isLoading ? <Loader /> : <div className='meta-page'>
