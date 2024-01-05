@@ -14,7 +14,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [able, setAble] = useState(false);
   const [name, setName] = useState('');
-  const [load, setLoad] = useState(false);
+  const [flag,setFlag] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -26,7 +26,7 @@ const App = () => {
   }, []);
 
   const fetchAccessToken = async (code) => {
-
+    setFlag(true);
     try {
       setIsLoading(true);
       console.log("authCode>> " + code);
@@ -65,7 +65,7 @@ const App = () => {
       // console.log(response.data.records);
       setValidationRules(response.data.records);
       setMetaButton(false);
-      setIsLoading(false);
+    
 
     } catch (error) {
       console.error('Error fetching validation rules:frontend', error);
@@ -80,7 +80,7 @@ const App = () => {
     const salesforceAuthUrl = `https://login.salesforce.com/services/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
 
     window.location.href = salesforceAuthUrl;
-    setLoad(true);
+   
   };
   const handleToggle = async (ruleId, currentStatus, formula, errormsg) => {
     try {
@@ -127,12 +127,12 @@ const App = () => {
     <div className='App'>
       <div style={{ color: "#ff6600", fontSize: "4rem" }}>Salesforce Switch</div>
 
-      {!load ? (
+      {!flag ? (
         <div className='login'>
           <h1>Login here and wait for a moment...  </h1>
           <button onClick={handleSalesforceAuth}>Login</button>
         </div>
-      ) : (metaButton  ? (isLoading || load ? <Loader /> : <div className='meta-page'>
+      ) : (metaButton  ? (isLoading  ? <Loader /> : <div className='meta-page'>
         <h2>Username: {name}</h2>
         <button className='meta-btn' onClick={fetchValidationRules}>Get Metadata</button>
       </div>) : (able || isLoading ? (<Loader />) : <div>
