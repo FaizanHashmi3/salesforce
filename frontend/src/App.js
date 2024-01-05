@@ -15,7 +15,7 @@ const App = () => {
   const [able, setAble] = useState(false);
   const [name, setName] = useState('');
   const [flag,setFlag] = useState(false);
-  const [btn,setBtn] = useState(false);
+  const [btn,setBtn] = useState(true);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -42,7 +42,7 @@ const App = () => {
 
       setAccessToken(accessToken);
       setIsLoading(false);
-      setBtn(true);
+      setBtn(false);
     
       // fetchValidationRules();
       // console.log("acessTknfrnt>> "+access_token);
@@ -76,6 +76,7 @@ const App = () => {
 
   const handleSalesforceAuth = () => {
     setIsLoading(true)
+    setBtn(false);
     const clientId = '3MVG95mg0lk4batjVwHpPkahCROA1JXckG2MoWXqDTqMcv2sI4NjLmzIJq33BJka_FCR0TwINW3LN.Yuclvxa';
     const redirectUri = 'https://salesforce-front.vercel.app';
 
@@ -129,12 +130,12 @@ const App = () => {
     <div className='App'>
       <div style={{ color: "#ff6600", fontSize: "4rem" }}>Salesforce Switch</div>
 
-      {!flag ? (
+      {btn && accessToken! && isLoading! ? (
         <div className='login'>
           <h1>Login here and wait for a moment...  </h1>
-       {!btn? (<button onClick={handleSalesforceAuth}>Login</button>): <Loader/>}
+      <button onClick={handleSalesforceAuth}>Login</button>
         </div>
-      ) : (metaButton  ? (isLoading  ? <Loader /> : <div className='meta-page'>
+      ) : (accessToken!   ? (isLoading  ? <Loader /> : <div className='meta-page'>
         <h2>Username: {name}</h2>
         <button className='meta-btn' onClick={fetchValidationRules}>Get Metadata</button>
       </div>) : (able || isLoading ? (<Loader />) : <div>
