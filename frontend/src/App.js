@@ -15,6 +15,7 @@ const App = () => {
   const [able, setAble] = useState(false);
   const [name, setName] = useState('');
   const [flag,setFlag] = useState(false);
+  const [btn,setBtn] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -41,7 +42,8 @@ const App = () => {
 
       setAccessToken(accessToken);
       setIsLoading(false);
-      setLoad(false);
+      setBtn(true);
+    
       // fetchValidationRules();
       // console.log("acessTknfrnt>> "+access_token);
       // console.log("resdata>> "+response.data);
@@ -130,7 +132,7 @@ const App = () => {
       {!flag ? (
         <div className='login'>
           <h1>Login here and wait for a moment...  </h1>
-          <button onClick={handleSalesforceAuth}>Login</button>
+       {!btn? (<button onClick={handleSalesforceAuth}>Login</button>): <Loader/>}
         </div>
       ) : (metaButton  ? (isLoading  ? <Loader /> : <div className='meta-page'>
         <h2>Username: {name}</h2>
