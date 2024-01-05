@@ -126,12 +126,13 @@ const App = () => {
   return (
     <div className='App'>
       <div style={{ color: "#ff6600", fontSize: "4rem" }}>Salesforce Switch</div>
+
       {!load ? (
         <div className='login'>
           <h1>Login here and wait for a moment...  </h1>
           <button onClick={handleSalesforceAuth}>Login</button>
         </div>
-      ) : (metaButton ? (isLoading ? <Loader /> : <div className='meta-page'>
+      ) : (metaButton || load ? (isLoading ? <Loader /> : <div className='meta-page'>
         <h2>Username: {name}</h2>
         <button className='meta-btn' onClick={fetchValidationRules}>Get Metadata</button>
       </div>) : (able || isLoading ? (<Loader />) : <div>
