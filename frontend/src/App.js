@@ -132,7 +132,7 @@ const App = () => {
           <h1>Login here and wait for a moment...  </h1>
           <button onClick={handleSalesforceAuth}>Login</button>
         </div>
-      ) : (metaButton && load ? (isLoading ? <Loader /> : <div className='meta-page'>
+      ) : (metaButton  ? (isLoading || load ? <Loader /> : <div className='meta-page'>
         <h2>Username: {name}</h2>
         <button className='meta-btn' onClick={fetchValidationRules}>Get Metadata</button>
       </div>) : (able || isLoading ? (<Loader />) : <div>
