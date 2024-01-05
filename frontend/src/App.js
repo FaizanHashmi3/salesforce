@@ -14,6 +14,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [able, setAble] = useState(false);
   const [name, setName] = useState('');
+  const [load, setLoad] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -40,6 +41,7 @@ const App = () => {
 
       setAccessToken(accessToken);
       setIsLoading(false);
+      setLoad(false);
       // fetchValidationRules();
       // console.log("acessTknfrnt>> "+access_token);
       // console.log("resdata>> "+response.data);
@@ -78,6 +80,7 @@ const App = () => {
     const salesforceAuthUrl = `https://login.salesforce.com/services/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
 
     window.location.href = salesforceAuthUrl;
+    setLoad(true);
   };
   const handleToggle = async (ruleId, currentStatus, formula, errormsg) => {
     try {
@@ -123,7 +126,7 @@ const App = () => {
   return (
     <div className='App'>
       <div style={{ color: "#ff6600", fontSize: "4rem" }}>Salesforce Switch</div>
-      {!accessToken ? (
+      {!load ? (
         <div className='login'>
           <h1>Login here and wait for a moment...  </h1>
           <button onClick={handleSalesforceAuth}>Login</button>
