@@ -7,12 +7,13 @@ import './App.css';
 import Loader from './Loader';
 import LoginPage from './LoginPage';
 import MetaPage from './metaPage';
+import ValidationList from './ValidationList';
 
 const App = () => {
   const [accessToken, setAccessToken] = useState('');
   const [validationRules, setValidationRules] = useState([]);
   const [isToggled, setIsToggled] = useState(false);
-  const [metaButton, setMetaButton] = useState(true);
+  const [metaButton, setMetaButton] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   // const [able, setAble] = useState(false);
   const [name, setName] = useState('');
@@ -38,7 +39,7 @@ const App = () => {
       const username = await response.data.username;
       setName(username);
       // console.log("response.data");
-      console.log(accessToken);
+      // console.log(accessToken);
       // console.log(username);
       // console.log(response.data);
 
@@ -58,7 +59,8 @@ const App = () => {
 
   const fetchValidationRules = async () => {
     try {
-      
+      setIsLoading(true)
+      setMetaButton(true);
       const response = await axios.get('https://salesforce-api.onrender.com/getValidationRules', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -68,6 +70,8 @@ const App = () => {
 
       // console.log(response.data.records);
       setValidationRules(response.data.records);
+      setIsLoading(false);
+      setMetaButton(false);
 
     
 
@@ -125,11 +129,15 @@ const App = () => {
 
   return (
     <div className='App'>
-      <div style={{ color: "green", fontSize: "4rem" }}>Salesforce Switch</div>
+      <div style={{ color: "brown", fontSize: "4rem" }}>Salesforce Switch</div>
 
       { !accessToken && !isLoading ? (
        <LoginPage handleSalesforceAuth={handleSalesforceAuth} />
-      ) :  ( isLoading ? (<Loader/>):(<MetaPage name={name} fetchValidationRules={fetchValidationRules}/>)) }
+      ) :  ( isLoading ? (<Loader/>):
+      (metaButton ?(<ValidationList/>): (<MetaPage name={name} fetchValidationRules={fetchValidationRules}/>))) 
+      
+      
+      }
       {/* : (able && isLoading ? (<Loader />) : <div>
         <div>
           <h2>Username: {name}</h2>
