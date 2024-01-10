@@ -129,7 +129,7 @@ const App = () => {
 
   return (
     <div className='App'>
-      <div style={{ color: "green", fontSize: "4rem" }}>Salesforce Switch</div>
+      <div style={{ color: "red", fontSize: "4rem" }}>Salesforce Switch</div>
 
       { !accessToken && !isLoading ? (
        <LoginPage handleSalesforceAuth={handleSalesforceAuth} />
