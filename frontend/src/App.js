@@ -130,12 +130,12 @@ const App = () => {
     <div className='App'>
       <div style={{ color: "black", fontSize: "4rem" }}>Salesforce Switch</div>
 
-      {btn && !accessToken && !isLoading ? (
+      {btn && !accessToken && isLoading ? (
         <div className='login'>
-          <h1>Login here and wait for a moment...  </h1>
+          <h1>Login here ...  </h1>
       <button onClick={handleSalesforceAuth}>Login</button>
         </div>
-      ) : (!accessToken   ? (isLoading  ? <Loader /> : <div className='meta-page'>
+      ) : (accessToken  ? (isLoading  ? <Loader /> : <div className='meta-page'>
         <h2>Username: {name}</h2>
         <button className='meta-btn' onClick={fetchValidationRules}>Get Metadata</button>
       </div>) : (able && isLoading ? (<Loader />) : <div>
