@@ -35,8 +35,8 @@ const App = () => {
       const username = await response.data.username;
       setName(username);
       // console.log("response.data");
-      console.log(accessToken);
-      console.log(username);
+      // console.log(accessToken);
+      // console.log(username);
       // console.log(response.data);
 
       setAccessToken(accessToken);
@@ -95,7 +95,7 @@ const App = () => {
       const response = await axios.put(`https://salesforce-api.onrender.com/toggleValidationRule/${ruleId}`, { newStatus, formula, errormsg });
 
       // console.log("response.data.updatedRule");
-      console.log(response.data);
+      // console.log(response.data);
       // setValidationRules(response.data.updatedRule); 
       fetchValidationRules();
       // setIsToggled(!isToggled);
@@ -112,14 +112,14 @@ const App = () => {
     validationRules.forEach(item => {
       handleToggle(item.Id, true, item.Metadata.errorConditionFormula, item.Metadata.errorMessage);
     });
-    setIsLoading(false);
+    // setIsLoading(false);
   }
   async function handleEnable() {
     setIsLoading(true)
     validationRules.forEach(item => {
       handleToggle(item.Id, false, item.Metadata.errorConditionFormula, item.Metadata.errorMessage);
     });
-    setIsLoading(false)
+    // setIsLoading(false)
   }
 
 
