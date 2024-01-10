@@ -14,10 +14,10 @@ const App = () => {
   const [isToggled, setIsToggled] = useState(false);
   const [metaButton, setMetaButton] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [able, setAble] = useState(false);
+  // const [able, setAble] = useState(false);
   const [name, setName] = useState('');
-  const [flag,setFlag] = useState(false);
-  const [btn,setBtn] = useState(true);
+  // const [flag,setFlag] = useState(false);
+  // const [btn,setBtn] = useState(true);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -29,7 +29,7 @@ const App = () => {
   }, []);
 
   const fetchAccessToken = async (code) => {
-    setFlag(true);
+ 
     try {
       setIsLoading(true);
       console.log("authCode>> " + code);
@@ -38,13 +38,13 @@ const App = () => {
       const username = await response.data.username;
       setName(username);
       // console.log("response.data");
-      // console.log(accessToken);
+      console.log(accessToken);
       // console.log(username);
       // console.log(response.data);
 
       setAccessToken(accessToken);
       setIsLoading(false);
-      setBtn(false);
+      // setBtn(false);
     
       // fetchValidationRules();
       // console.log("acessTknfrnt>> "+access_token);
@@ -58,7 +58,7 @@ const App = () => {
 
   const fetchValidationRules = async () => {
     try {
-      setIsLoading(true);
+      
       const response = await axios.get('https://salesforce-api.onrender.com/getValidationRules', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -68,7 +68,7 @@ const App = () => {
 
       // console.log(response.data.records);
       setValidationRules(response.data.records);
-      setMetaButton(false);
+
     
 
     } catch (error) {
@@ -78,7 +78,7 @@ const App = () => {
 
   const handleSalesforceAuth = () => {
     setIsLoading(true)
-    setBtn(false);
+    // setBtn(false);
     const clientId = '3MVG95mg0lk4batjVwHpPkahCROA1JXckG2MoWXqDTqMcv2sI4NjLmzIJq33BJka_FCR0TwINW3LN.Yuclvxa';
     const redirectUri = 'https://salesforce-front.vercel.app';
 
@@ -89,7 +89,7 @@ const App = () => {
   };
   const handleToggle = async (ruleId, currentStatus, formula, errormsg) => {
     try {
-      setIsLoading(true);
+      
       const newStatus = !currentStatus;
       const response = await axios.put(`https://salesforce-api.onrender.com/toggleValidationRule/${ruleId}`, { newStatus, formula, errormsg });
 
@@ -98,7 +98,7 @@ const App = () => {
       // setValidationRules(response.data.updatedRule); 
       fetchValidationRules();
       setIsToggled(!isToggled);
-      setIsLoading(false);
+      
     } catch (error) {
       console.error('Error toggling validation rule status:', error);
 
@@ -106,21 +106,16 @@ const App = () => {
   };
 
   function handleDisable() {
-    setAble(true)
+    
     validationRules.forEach(item => {
       handleToggle(item.Id, true, item.Metadata.errorConditionFormula, item.Metadata.errorMessage);
     });
-    setAble(false)
-    // setIsLoading(false)
   }
   async function handleEnable() {
-    setAble(true)
-    setIsLoading(true)
+
     validationRules.forEach(item => {
       handleToggle(item.Id, false, item.Metadata.errorConditionFormula, item.Metadata.errorMessage);
     });
-    setAble(false)
-    // setIsLoading(false)
   }
 
 
@@ -130,11 +125,11 @@ const App = () => {
 
   return (
     <div className='App'>
-      <div style={{ color: "red", fontSize: "4rem" }}>Salesforce Switch</div>
+      <div style={{ color: "green", fontSize: "4rem" }}>Salesforce Switch</div>
 
-      { !accessToken ? (
+      { !accessToken && !isLoading ? (
        <LoginPage handleSalesforceAuth={handleSalesforceAuth} />
-      ) :  ( <MetaPage name={name} fetchValidationRules={fetchValidationRules}/>) }
+      ) :  ( isLoading ? (<Loader/>):(<MetaPage name={name} fetchValidationRules={fetchValidationRules}/>)) }
       {/* : (able && isLoading ? (<Loader />) : <div>
         <div>
           <h2>Username: {name}</h2>
