@@ -40,7 +40,7 @@ const App = () => {
       setName(username);
       // console.log("response.data");
       console.log(accessToken);
-      // console.log(username);
+      console.log(username);
       // console.log(response.data);
 
       setAccessToken(accessToken);
@@ -101,7 +101,7 @@ const App = () => {
       console.log(response.data);
       // setValidationRules(response.data.updatedRule); 
       fetchValidationRules();
-      setIsToggled(!isToggled);
+      // setIsToggled(!isToggled);
       
     } catch (error) {
       console.error('Error toggling validation rule status:', error);
@@ -129,7 +129,7 @@ const App = () => {
 
   return (
     <div className='App'>
-      <div style={{ color: "brown", fontSize: "4rem" }}>Salesforce Switch</div>
+      <div style={{ color: "green", fontSize: "4rem" }}>Salesforce Switch</div>
 
       { !accessToken && !isLoading ? (
        <LoginPage handleSalesforceAuth={handleSalesforceAuth} />
