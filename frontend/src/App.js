@@ -39,7 +39,7 @@ const App = () => {
       const username = await response.data.username;
       setName(username);
       // console.log("response.data");
-      // console.log(accessToken);
+      console.log(accessToken);
       // console.log(username);
       // console.log(response.data);
 
