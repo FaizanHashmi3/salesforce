@@ -88,8 +88,9 @@ const App = () => {
    
   };
   const handleToggle = async (ruleId, currentStatus, formula, errormsg) => {
+
     try {
-      
+      setIsLoading(true)
       const newStatus = !currentStatus;
       const response = await axios.put(`https://salesforce-api.onrender.com/toggleValidationRule/${ruleId}`, { newStatus, formula, errormsg });
 
@@ -98,6 +99,7 @@ const App = () => {
       // setValidationRules(response.data.updatedRule); 
       fetchValidationRules();
       // setIsToggled(!isToggled);
+      setIsLoading(false);
       
     } catch (error) {
       console.error('Error toggling validation rule status:', error);
@@ -106,16 +108,18 @@ const App = () => {
   };
 
   function handleDisable() {
-    
+    setIsLoading(true);
     validationRules.forEach(item => {
       handleToggle(item.Id, true, item.Metadata.errorConditionFormula, item.Metadata.errorMessage);
     });
+    setIsLoading(false);
   }
   async function handleEnable() {
-
+    setIsLoading(true)
     validationRules.forEach(item => {
       handleToggle(item.Id, false, item.Metadata.errorConditionFormula, item.Metadata.errorMessage);
     });
+    setIsLoading(false)
   }
 
 
@@ -125,7 +129,7 @@ const App = () => {
 
   return (
     <div className='App'>
-      <div style={{ color: "brown", fontSize: "4rem" }}>Salesforce Switch</div>
+      <div style={{ color: "#ff6600", fontSize: "4rem" }}>Salesforce Switch</div>
 
       { !accessToken && !isLoading ? (
        <LoginPage handleSalesforceAuth={handleSalesforceAuth} />
