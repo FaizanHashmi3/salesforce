@@ -5,6 +5,8 @@ import axios from 'axios';
 import { FaToggleOff, FaToggleOn } from "react-icons/fa";
 import './App.css';
 import Loader from './Loader';
+import LoginPage from './LoginPage';
+import MetaPage from './metaPage';
 
 const App = () => {
   const [accessToken, setAccessToken] = useState('');
@@ -128,17 +130,12 @@ const App = () => {
 
   return (
     <div className='App'>
-      <div style={{ color: "black", fontSize: "4rem" }}>Salesforce Switch</div>
+      <div style={{ color: "red", fontSize: "4rem" }}>Salesforce Switch</div>
 
-      {btn && !accessToken && isLoading ? (
-        <div className='login'>
-          <h1>Login here ...  </h1>
-      <button onClick={handleSalesforceAuth}>Login</button>
-        </div>
-      ) : (accessToken  ? (isLoading  ? <Loader /> : <div className='meta-page'>
-        <h2>Username: {name}</h2>
-        <button className='meta-btn' onClick={fetchValidationRules}>Get Metadata</button>
-      </div>) : (able && isLoading ? (<Loader />) : <div>
+      { !accessToken ? (
+       <LoginPage handleSalesforceAuth={handleSalesforceAuth} />
+      ) :  ( <MetaPage name={name} fetchValidationRules={fetchValidationRules}/>) }
+      {/* : (able && isLoading ? (<Loader />) : <div>
         <div>
           <h2>Username: {name}</h2>
           <button className='disable-btn' onClick={() => handleDisable()}>Disable all</button>
@@ -168,7 +165,7 @@ const App = () => {
           </table>
         </div>
       </div>)
-      )}
+      )} */}
 
 
 
