@@ -71,7 +71,7 @@ const App = () => {
       // console.log(response.data.records);
       setValidationRules(response.data.records);
       setIsLoading(false);
-      setMetaButton(false);
+      // setMetaButton(false);
 
     
 
