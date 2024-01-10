@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaToggleOff, FaToggleOn } from "react-icons/fa";
 import './App.css';
 import Loader from './Loader';
 import LoginPage from './LoginPage';
@@ -15,10 +14,7 @@ const App = () => {
   const [isToggled, setIsToggled] = useState(false);
   const [metaButton, setMetaButton] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  // const [able, setAble] = useState(false);
   const [name, setName] = useState('');
-  // const [flag,setFlag] = useState(false);
-  // const [btn,setBtn] = useState(true);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -129,54 +125,18 @@ const App = () => {
 
   return (
     <div className='App'>
-      <div style={{ color: "red", fontSize: "4rem" }}>Salesforce Switch</div>
+      <div style={{ color: "brown", fontSize: "4rem" }}>Salesforce Switch</div>
 
       { !accessToken && !isLoading ? (
        <LoginPage handleSalesforceAuth={handleSalesforceAuth} />
       ) :  ( isLoading ? (<Loader/>):
-      (metaButton ?(<ValidationList/>): (<MetaPage name={name} fetchValidationRules={fetchValidationRules}/>))) 
+      (metaButton ?
+        (<ValidationList name={name} handleDisable={handleDisable} handleEnable={handleEnable} validationRules={validationRules} handleToggle={handleToggle}/>):
+         (<MetaPage name={name} fetchValidationRules={fetchValidationRules}/>))) 
       
       
       }
-      {/* : (able && isLoading ? (<Loader />) : <div>
-        <div>
-          <h2>Username: {name}</h2>
-          <button className='disable-btn' onClick={() => handleDisable()}>Disable all</button>
-          <button className='enable-btn' onClick={() => handleEnable()}>Enable all</button>
-
-        </div>
-        <div>
-          <table className='table-body'>
-            <tr>
-              <th className='th'>Validation Rules</th>
-              <th className='th'>Active status</th>
-            </tr>
-            {validationRules.map((item, key) => {
-              return (<tr key={item.Id}>
-
-                <td>{item.ValidationName}</td>
-                <td className='toggle' onClick={() => {
-                  handleToggle(item.Id, item.Metadata.active, item.Metadata.errorConditionFormula, item.Metadata.errorMessage
-                  )
-                }}>{item.Metadata.active ? (<FaToggleOn color="green" size={30} />) :
-                  (<FaToggleOff color="red" size={30} />)
-                  }</td>
-
-              </tr>
-              )
-            })}
-          </table>
-        </div>
-      </div>)
-      )} */}
-
-
-
-
-
-
-
-
+      
     </div>
   );
 };
